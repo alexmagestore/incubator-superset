@@ -125,6 +125,20 @@ class ExtraCache:
                 self.cache_key_wrapper(g.user.username)
             return g.user.username
         return None
+    
+        def current_merchant_id() -> Optional[str]:
+            """The merchant id of the user who is currently logged in"""
+            if g.user:
+                pos = g.user.username.find("_")
+                if pos != -1:
+                    return g.user.username[pos+1:]
+                else:
+                    return 1
+            return 1
+
+        def current_group_id() -> Optional[str]:
+            """The merchant group id of the user who is currently logged in"""
+            return int(current_merchant_id())//10 + 1        
 
     def cache_key_wrapper(self, key: Any) -> Any:
         """
